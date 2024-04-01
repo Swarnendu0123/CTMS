@@ -1,13 +1,11 @@
 import './App.css'
-import HomePage from './components/HomePage'
-import MatchesDetails from './components/MatchDetails'
+import Teams from './components/Teams'
 function App() {
 
   return (
     <>
     <div className='flex'>
-        <HomePage/> 
-        <MatchesDetails/>
+        <Teams/> 
     </div>
     </>
   )
