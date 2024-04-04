@@ -15,6 +15,8 @@ import Login from './components/Login.jsx';
 import GenerateTeam from './components/GenerateTeam.jsx';
 import GeneratedTeam from './components/GeneratedTeam.jsx';
 import Teams from './components/Teams.jsx';
+import SignUp from './components/SignUp.jsx';
+import Navbar from './components/Navbar.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -22,13 +24,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Router>
       <RecoilRoot>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/matches" element={<MatchesDetails />} />
-          <Route path="/matches/:id" element={<IndividualMatchesDetails />} />
-          <Route path="/team/new" element={<NewTeam />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/generate" element={<GenerateTeam />} />
-          <Route path="/generated/team" element={<Teams/>}/>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/" element={<Navbar />}>
+            <Route path="matches" element={<MatchesDetails />} />
+            <Route path="matches/:id" element={<IndividualMatchesDetails />} />
+            <Route path="dashboard" element={<App />} />
+            <Route path="team/new" element={<NewTeam />} />
+            <Route path="generate" element={<GenerateTeam />} />
+            <Route path="generated/team" element={<Teams />} />
+          </Route>
         </Routes>
       </RecoilRoot>
     </Router>

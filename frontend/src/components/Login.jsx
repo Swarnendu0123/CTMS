@@ -1,14 +1,31 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { database } from "./FirebaseConfig";
+import { useEffect, useState } from "react";
+import { database } from "../config/FirebaseConfig";
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        database.onAuthStateChanged((user) => {
+            setUser(user);
+        });
+    }, []);
+    
+    useEffect(() => {
+        if (user) {
+            navigate('/dashboard');
+        }
+    }
+    , [user]);
+
+
+
 
     const handleSignIn = async (e) => {
         e.preventDefault();
@@ -62,9 +79,7 @@ const Login = () => {
             className="m-3 p-3"
             />
             <br />
-            <button onClick={submitHandler}>Sign Up</button>
-        
-        {error && <p>{error}</p>}
+            <button onClick={handleSignIn}>Sign In</button>
         </div>
     );
     };

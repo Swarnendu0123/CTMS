@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { numberOfTeamsState } from "../store/NumberOfTeam";
 import IndividualTeam from "./IndividualTeam";
+import { useNavigate } from "react-router-dom";
+import { database } from "../config/FirebaseConfig";
 
 
 const Teams = () => {
@@ -26,6 +28,7 @@ const [selectedTeam, setSelectedTeam] = useState(teams[0]);
 
 
     return (
+        <div className="teams pt-20 snap-x h-100">
         <div className="container flex">
             <table className="table border m-3">
                 <thead>
@@ -50,6 +53,7 @@ const [selectedTeam, setSelectedTeam] = useState(teams[0]);
                 </tbody>
             </table>
             <IndividualTeam team={selectedTeam} />
+        </div>
         </div>
     );
 }

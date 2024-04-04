@@ -24,7 +24,7 @@ app.get('/matches', async(req, res) => {
 
 
 app.get('/teams', async(req, res) => {
-    const response = await Team.find({});
+    const response = await Team.find();
     console.log(response)
     res.send(response);
 });
