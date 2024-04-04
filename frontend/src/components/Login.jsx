@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { database } from "./FirebaseConfig";
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -8,18 +10,37 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const submitHandler = async () => {
-        if(email === '' || password === '') {
-            setError('Please fill all the fields');
-            return;
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+        try {
+             await signInWithEmailAndPassword(database, email, password);
+            toast.success('successfully signed in', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+        } catch (err) {
+            console.log(err.message);
+            toast.error('Something went wrong, please try again!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                
+            });
         }
-        if(email === "admin" && password === "admin") {
-            setError('Logged in successfully');
-            navigate('/generate')
-            return;
-        }
-        setError('Invalid credentials');
-    };
+    }
     
     return (
         <div>

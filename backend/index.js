@@ -11,7 +11,7 @@ app.use(cors());
 
 
 async function connect() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/cricketDb');
+    await mongoose.connect('mongodb+srv://ritabrata:ritabrata@cluster0.w9c9sfo.mongodb.net/CTMS');
     console.log('Connected to database');
 }
 
@@ -25,6 +25,7 @@ app.get('/matches', async(req, res) => {
 
 app.get('/teams', async(req, res) => {
     const response = await Team.find({});
+    console.log(response)
     res.send(response);
 });
 

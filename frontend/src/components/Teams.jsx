@@ -15,6 +15,7 @@ const [selectedTeam, setSelectedTeam] = useState(teams[0]);
             .then((res) => res.json())
             .then((data) => {
                 const randomTeams = data.sort(() => Math.random() - Math.random()).slice(0, numberOfTeams);
+                console.log(randomTeams);
                 setTeams(randomTeams);
             });
     }, []);

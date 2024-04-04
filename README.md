@@ -1,1 +1,4 @@
 # CTMS
+```
+npm run dev
+```
