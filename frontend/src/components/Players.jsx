@@ -1,6 +1,5 @@
 const Players = ({playersArray, teamName}) => {
     // represent the players in the table
-    console.log(playersArray);
     return (
         <div className="m-3">
             <h2>{teamName}</h2>
@@ -22,6 +21,12 @@ const Players = ({playersArray, teamName}) => {
                             <td className="p-2">{player.wickets}</td>
                         </tr>
                     ))}
+                    <tr  className="border">
+                        <td className="p-2">Total</td>
+                        <td className="p-2"></td>
+                        <td className="p-2">{playersArray.reduce((acc, player) => acc + player.score, 0)}</td>
+                        <td className="p-2">{playersArray.reduce((acc, player) => acc + player.wickets, 0)}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

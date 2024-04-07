@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Match = require('./db/MatchSchema');
 const Team = require('./db/TeamSchema');
+const MongoDBUrl = require('./db.config');
 
 
 async function connect() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/cricketDb');
+    await mongoose.connect(MongoDBUrl)
     console.log('Connected to database');
 }
 
@@ -703,10 +704,10 @@ const teams = [
 console.log(teams);
 
 //save the matches to the database
-matches.forEach((match) => {
-    new Match(match).save();
-    console.log('Match saved to database');
-});
+// matches.forEach((match) => {
+//     new Match(match).save();
+//     console.log('Match saved to database');
+// });
 
 
 // save the teams to the database

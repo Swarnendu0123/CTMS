@@ -7,16 +7,17 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import IndividualMatchesDetails from './components/IndividualMatchesDetails.jsx';
 import { RecoilRoot } from 'recoil';
 import NewTeam from './components/NewTeam.jsx';
 import MatchesDetails from './components/MatchDetails.jsx';
 import Login from './components/Login.jsx';
 import GenerateTeam from './components/GenerateTeam.jsx';
-import GeneratedTeam from './components/GeneratedTeam.jsx';
 import Teams from './components/Teams.jsx';
 import SignUp from './components/SignUp.jsx';
 import Navbar from './components/Navbar.jsx';
+import ErrorPage from './components/ErrorPage.jsx';
+import Thanks from './components/Thanks.jsx';
+import ViewMatches from './components/ViewMatches.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -28,12 +29,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Navbar />}>
             <Route path="matches" element={<MatchesDetails />} />
-            <Route path="matches/:id" element={<IndividualMatchesDetails />} />
             <Route path="dashboard" element={<App />} />
             <Route path="team/new" element={<NewTeam />} />
             <Route path="generate" element={<GenerateTeam />} />
             <Route path="generated/team" element={<Teams />} />
+            <Route path="thanks" element={<Thanks />} />
+            <Route path='view/matches' element={<ViewMatches/>}/>
+            <Route path="*" element={<ErrorPage />} />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </RecoilRoot>
     </Router>

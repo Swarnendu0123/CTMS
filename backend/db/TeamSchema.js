@@ -35,6 +35,22 @@ const TeamSchema = new Schema({
                 type: String,
                 required: true
             },
+            score: {
+                type: Number,
+                default: 0
+            },
+            wickets: {
+                type: Number,
+                default: 0
+            },
+            strikeRate: {
+                type: Number,
+                default: 0
+            },
+            economy: {
+                type: Number,
+                default: 0
+            }
         }
     ]
 });

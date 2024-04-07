@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { database } from "../config/FirebaseConfig";
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
@@ -16,6 +15,16 @@ const SignUp = () => {
         database.onAuthStateChanged((user) => {
             setUser(user);
         });
+         //save as a user in mongoDB
+         fetch('http://localhost:8000/user/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        });
     }, []);
     
     useEffect(() => {
@@ -29,45 +38,21 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            if (password === confirmPassword) {
-                await createUserWithEmailAndPassword(database, email, password);
-                toast.success('Account successfully created, please signin now!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            } else {
-                toast.error('Passwords are not matching', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                    transition: Bounce,
-                });
-                return;
-            }
-        } catch (err) {
-            toast.error('Account already exists!', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
+             await createUserWithEmailAndPassword(database, email, password);
+            
+            //save as a user in mongoDB
+            fetch('http://localhost:8000/user/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email
+                })
             });
-            console.log(err.message);
+            console.log("User successfully logged in")
+        } catch (err) {
+       console.log(err);
         }
     }
     

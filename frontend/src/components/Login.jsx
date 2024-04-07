@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { database } from "../config/FirebaseConfig";
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,16 +12,21 @@ const Login = () => {
 
     useEffect(() => {
         database.onAuthStateChanged((user) => {
-            setUser(user);
+            setUser({
+                email: user.email,
+                isAdmin: false
+            });
         });
     }, []);
     
+
+    
     useEffect(() => {
-        if (user) {
+        console.log(user);
+        if (user !== null) {
             navigate('/dashboard');
         }
-    }
-    , [user]);
+    });
 
 
 
@@ -31,31 +35,20 @@ const Login = () => {
         e.preventDefault();
         try {
              await signInWithEmailAndPassword(database, email, password);
-            toast.success('successfully signed in', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
+            
+            //save as a user in mongoDB
+            fetch('http://localhost:8000/user/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email
+                })
             });
+            console.log("User successfully logged in")
         } catch (err) {
-            console.log(err.message);
-            toast.error('Something went wrong, please try again!', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
-                
-            });
+       console.log(err);
         }
     }
     
@@ -64,7 +57,7 @@ const Login = () => {
         <h1>Login</h1>
         
             <input
-            type="password"
+            type="email"
             placeholder="Username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

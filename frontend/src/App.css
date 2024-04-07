@@ -14,7 +14,10 @@
 
 .teams{
   margin: 0 auto;
+  align-items: center;
+  justify-content: center;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }

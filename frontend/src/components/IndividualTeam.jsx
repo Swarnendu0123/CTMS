@@ -2,13 +2,15 @@ const IndividualTeam = ({ team }) => {
 
     return (
         team && (
-            <div className="container">
+            <div className="flex">
+                <div>
                 <h1>{team.teamName}</h1>
                 <h3>Coach: {team.coach}</h3>
                 <h3>Captain: {team.captain}</h3>
                 <h3>Matches Played: {team.MP}</h3>
                 <h3>Points: {team.points}</h3>
                 <h3>Players</h3>
+                </div>
                 <table className="table border m-3">
                     <thead>
                         <tr>

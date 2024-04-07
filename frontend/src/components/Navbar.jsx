@@ -1,27 +1,60 @@
-import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { database } from "../config/FirebaseConfig";
+import { signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const [userEmail, setUserEmail] = useState();
+    const [isAdmin, setIsAdmin] = useState(false);
+    console.log(userEmail);
 
     useEffect(() => {
-        database.onAuthStateChanged((user) => {
-            setUser(user);
+        database.onAuthStateChanged(user => {
+            if (user) {
+                setUserEmail(user.email);
+            } else {
+                setUserEmail(null);
+            }
         });
-    }, []);
-    
-  
+    }, [setUserEmail]);
+
+
+
+    useEffect(() => {
+        if (userEmail) {
+            fetch('http://localhost:8000/user/' + userEmail)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isAdmin) {
+                        console.log(data.isAdmin);
+                        setIsAdmin(true);
+                    }
+                });
+        }
+    }, [userEmail])
+
+
+
+    const handleSignOut = async () => {
+        try {
+            const res = await signOut(database);
+            if (res === undefined) {
+                setUserEmail(null);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
 
 
     return (
         <div>
-            <header className="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white text-sm py-3 md:py-0 dark:bg-gray-800 fixed">
+            <header className="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white text-sm py-3 md:py-0 dark:bg-gray-800 fixed top-0">
                 <nav className="max-w-[85rem] w-full mx-auto px-4 md:px-6 lg:px-8" aria-label="Global">
                     <div className="relative md:flex md:items-center md:justify-between">
                         <div className="flex items-center justify-between">
-                            <a className="flex-none text-xl font-semibold dark:text-white" href="#" aria-label="Brand">CTMS</a>
+                            <a className="flex-none text-xl font-semibold dark:text-white" href="/dashboard" aria-label="Brand">CTMS</a>
                             <div className="md:hidden">
                                 <button type="button" className="hs-collapse-toggle flex justify-center items-center size-9 text-sm font-semibold rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-gray-700 dark:hover:bg-gray-700" data-hs-collapse="#navbar-collapse-with-animation" aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation">
                                     <svg className="hs-collapse-open:hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6" /><line x1="3" x2="21" y1="12" y2="12" /><line x1="3" x2="21" y1="18" y2="18" /></svg>
@@ -47,14 +80,21 @@ const Navbar = () => {
 
                                     </div>
 
-                                    <a className="font-medium text-gray-800 hover:text-gray-600 py-3 md:py-6 dark:text-gray-200 dark:hover:text-gray-500" href="#">
-                                        {user?.email}
+                                    <a className="font-medium text-gray-800 hover:text-gray-600 py-3 md:py-6 dark:text-gray-200 " href="#">
+                                        {userEmail}
+                                        {
+                                            isAdmin && <span className=" p-1 m-3  bg-green-500 text-xs  dark:text-gray-100">Admin</span>
+                                        }
+
                                     </a>
 
                                     <div className="pt-3 md:pt-0">
-                                        <a className="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+                                        {userEmail && <button className="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#" onClick={handleSignOut}>
                                             Log Out
-                                        </a>
+                                        </button>}
+                                        {!userEmail && <button className="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#" onClick={() => { navigate("/login") }}>
+                                            Log In
+                                        </button>}
                                     </div>
                                 </div>
                             </div>
