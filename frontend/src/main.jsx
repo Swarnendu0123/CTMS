@@ -18,6 +18,7 @@ import Navbar from './components/Navbar.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
 import Thanks from './components/Thanks.jsx';
 import ViewMatches from './components/ViewMatches.jsx';
+import Stats from './components/Stats.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="generated/team" element={<Teams />} />
             <Route path="thanks" element={<Thanks />} />
             <Route path='view/matches' element={<ViewMatches/>}/>
+            <Route path='stats' element={<Stats/>}/>
             <Route path="*" element={<ErrorPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
