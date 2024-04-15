@@ -19,6 +19,7 @@ import ErrorPage from './components/ErrorPage.jsx';
 import Thanks from './components/Thanks.jsx';
 import ViewMatches from './components/ViewMatches.jsx';
 import Stats from './components/Stats.jsx';
+import Pointstable from './components/PointsTable.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -37,6 +38,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="thanks" element={<Thanks />} />
             <Route path='view/matches' element={<ViewMatches/>}/>
             <Route path='stats' element={<Stats/>}/>
+            <Route path='points-table' element={<Pointstable/>}/>
             <Route path="*" element={<ErrorPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />

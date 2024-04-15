@@ -5,7 +5,6 @@ const Stats = ()=>{
     const [allPlayerMap, setAllPlayerMap] = useState({});
     const [top5ByWickets, setTop5ByWickets] = useState([]);
 
-
    
     useEffect(() => {
         fetch("http://localhost:8000/matches")
@@ -72,7 +71,7 @@ const Stats = ()=>{
 
     return (
         <div>
-            <div className="container pt-5 flex ">
+            <div className="container pt-5 flex justify-center">
             <div className="pt-20 flex">
                 {/* represent players vs score table */}
                 <table className="table border m-3">

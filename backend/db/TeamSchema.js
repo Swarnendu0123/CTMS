@@ -17,6 +17,10 @@ const TeamSchema = new Schema({
         type: Number,
         required: true
     },
+    finalScore: {
+        type: Number,
+        default: 0
+    },
     points: {
         type: Number,
         required: true

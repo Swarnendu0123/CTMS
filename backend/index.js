@@ -51,7 +51,7 @@ app.get('/user/:email', async(req, res) => {
 
 
 // match routes
-app.get('/matches', async(req, res) => {
+app.get('/matches', async(req, res) => { //get the all matches
     const response = await Match.find({});
     res.send(response);
 });
@@ -68,7 +68,7 @@ app.post('/matches', async(req, res) => {
 });
 
 // team routes
-app.get('/teams', async(req, res) => {
+app.get('/teams', async(req, res) => { // route to get all teams
     const response = await Team.find();
     console.log(response)
     res.send(response);
