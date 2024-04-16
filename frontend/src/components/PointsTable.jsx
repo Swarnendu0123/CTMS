@@ -37,12 +37,10 @@ const Pointstable = () => {
                 })
             }
         })
+        teams.sort((a, b) => b.finalScore - a.finalScore);
     })
 
-    useEffect(() => {
-        teams.sort((a, b) => b.finalScore - a.finalScore);
-    }, [teams])
-
+   
     return (
         <div className="flex flex-col justify-center items-center">
         <h1 className="">
